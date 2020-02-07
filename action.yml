@@ -1,5 +1,8 @@
 name: 'ECS Deployment'
 description: 'Github action using fabfuel/ecs-deploy script for ecs deployments'
+branding:
+  icon: play
+  color: orange
 inputs:
   action:
     description: 'Action to perform. Defaults to deploy'
