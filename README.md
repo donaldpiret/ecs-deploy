@@ -85,7 +85,7 @@ uses: donaldpiret/ecs-deploy@master
 with:
   cluster: theClusterName
   target: theServiceName
-  env_vars: SOME_VARIABLE SOME_VALUE
+  env_vars: containerName SOME_VARIABLE SOME_VALUE
  ```
 
 ### Adjust multiple environment variables
@@ -95,7 +95,7 @@ uses: donaldpiret/ecs-deploy@master
 with:
   cluster: theClusterName
   target: theServiceName
-  env_vars: SOME_VARIABLE SOME_VALUE, OTHER_VARIABLE OTHER_VALUE, APP_VARIABLE APP_VALUE
+  env_vars: containerName SOME_VARIABLE SOME_VALUE, containerName OTHER_VARIABLE OTHER_VALUE, appContainerName APP_VARIABLE APP_VALUE
  ```
 
 ### Set environment variables exclusively, remove all other pre-existing environment variables
@@ -105,39 +105,129 @@ uses: donaldpiret/ecs-deploy@master
 with:
   cluster: theClusterName
   target: theServiceName
-  env_vars: SOME_VARIABLE SOME_VALUE
+  env_vars: containerName SOME_VARIABLE SOME_VALUE
   exclusive_env: true
  ```
 
-### Set a secret environment variable from the AWS Parameter Store
+### Set a secret environment variable from the AWS Parameter Store or Secrets Manager
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  secrets: containerName SOME_SECRET arn:aws:ssm:<aws region>:<aws account id>:parameter/KEY_OF_SECRET_IN_PARAMETER_STORE
+ ```
 
 ### Set secrets exclusively, remove all other pre-existing secret environment variables
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  secrets: containerName SOME_SECRET arn:aws:ssm:<aws region>:<aws account id>:parameter/KEY_OF_SECRET_IN_PARAMETER_STORE
+  exclusive_secrets: true 
+```
 
 ### Modify a command
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  command: containerName "nginx -c /etc/nginx/nginx.conf"
+```
 
 ### Set a task role
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  task_role: arn:aws:iam::123456789012:role/MySpecialEcsTaskRole
+```
 
 ### Ignore capacity issues
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  ignore_warnings: true
+```
 
 ### Deployment timeout
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  timeout: 1200
+```
+
+To run a deployment without waiting for the successful or failed result at all, set timeout to the value of -1.
+
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  timeout: -1
+```
 
 ## Scaling
 
 ### Scale a service
 
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: scale
+  cluster: theClusterName
+  target: theServiceName
+  scale_value: 4
+```
+
+## Running a Task
+
+### Run a one-off task
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: run
+  cluster: theClusterName
+  target: taskName:taskRevision
+```
+
+You can define environment variables just like for deploy
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: run
+  cluster: theClusterName
+  target: taskName:taskRevision
+  env_vars: containerName SOME_VARIABLE SOME_VALUE, containerName OTHER_VARIABLE OTHER_VALUE, appContainerName APP_VARIABLE APP_VALUE
+ ```
+
+### Run a task with a custom command
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: run
+  cluster: theClusterName
+  target: taskName:taskRevision
+  command: my-container "python some-script.py param1 param2"
+```
+
+### Run a task in a Fargate Cluster
+
 TODO
-
-
-

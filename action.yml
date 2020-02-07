@@ -21,10 +21,32 @@ inputs:
     description: 'Applicable to the deploy action. Updates the target service with a new task definition, which can either be an ARN, a family name with revision, or just a family name (you will get the most recent revision)'
     required: false
   env_vars:
-    description: 'Set one or more environment variables. The syntax is "[ENV_VAR_NAME] [ENV_VAR_VALUE]". You can set multiple env vars by comma-separating them as "[ENV_VAR_NAME] [ENV_VAR_VALUE], [ANOTHER_ENV_VAR_NAME] [ANOTHER_ENV_VAR_VALUE]"'
+    description: 'Set one or more environment variables. The syntax is "[container] [ENV_VAR_NAME] [ENV_VAR_VALUE]". You can set multiple env vars by comma-separating them as "[container] [ENV_VAR_NAME] [ENV_VAR_VALUE], [container] [ANOTHER_ENV_VAR_NAME] [ANOTHER_ENV_VAR_VALUE]"'
     required: false
   exclusive_env:
     description: 'To reset all existing environment variables of a task definition. Set to "true" to enable'
+    required: false
+  secrets:
+    description: 'Set one or more secrets from parameter store or secrets manager. The syntax is "[container] [SECRET_NAME] [SECRET_ARN]". You can set multiple env vars by comma-separating them as "[container] [SECRET_NAME] [SECRET_ARN], [container] [ANOTHER_SECRET_NAME] [ANOTHER_SECRET_ARN]"'
+    required: false
+  exclusive_secrets:
+    description: 'To reset all existing secrets (secret environment variables) of a task definition. Set to "true" to enable'
+    required: false
+  command:
+    description: 'To change the command of a specific container. The syntax is "[container] "[command]" "'
+    required: false
+  task_role:
+    description: "To change or set the role, the service's task should run as, specify the role ARN here"
+    required: false
+  ignore_warnings:
+    description: 'To ignore warnings that come up during deployment and continue to wait until the deployment times out, set this to "true"'
+    required: false
+  timeout:
+    description: "How long to wait for things to time out (in seconds)"
+    required: false
+    default: "300"
+  scale_value:
+    description: "Applicable to the scale action. Determines how many running tasks you wish to have on the service"
     required: false
 
 runs:
