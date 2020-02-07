@@ -1,4 +1,4 @@
-name: 'ECS Deploy'
+name: 'ECS Deployment'
 description: 'Github action using fabfuel/ecs-deploy script for ecs deployments'
 inputs:
   action:
