@@ -1,0 +1,24 @@
+name: 'ECS Deploy'
+description: 'Github action using fabfuel/ecs-deploy script for ecs deployments'
+inputs:
+  action:
+    description: 'Action to perform. Defaults to deploy'
+    required: true
+    default: 'deploy'
+  cluster:
+    description: 'Cluster name where service/task will be deployed'
+    required: true
+  target:
+    description: 'Service or task name to perform this action on'
+    required: true
+  tag:
+    description: 'Applicable to the deploy action. Changes the tag of all images in all containers in the task definition to the tag given'
+    required: false
+  image:
+    description: 'Applicable to the deploy action. Updates the image of a specific container. Pass the value as "[container-name] [image-name]:[image-tag]". You can pass multiple values as comma-separated'
+    required: false
+
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
