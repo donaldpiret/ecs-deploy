@@ -80,15 +80,34 @@ with:
 
 ### Set an environment variable
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  env_vars: SOME_VARIABLE SOME_VALUE
+ ```
 
 ### Adjust multiple environment variables
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  env_vars: SOME_VARIABLE SOME_VALUE, OTHER_VARIABLE OTHER_VALUE, APP_VARIABLE APP_VALUE
+ ```
 
 ### Set environment variables exclusively, remove all other pre-existing environment variables
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  env_vars: SOME_VARIABLE SOME_VALUE
+  exclusive_env: true
+ ```
 
 ### Set a secret environment variable from the AWS Parameter Store
 

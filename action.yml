@@ -23,6 +23,9 @@ inputs:
   env_vars:
     description: 'Set one or more environment variables. The syntax is "[ENV_VAR_NAME] [ENV_VAR_VALUE]". You can set multiple env vars by comma-separating them as "[ENV_VAR_NAME] [ENV_VAR_VALUE], [ANOTHER_ENV_VAR_NAME] [ANOTHER_ENV_VAR_VALUE]"'
     required: false
+  exclusive_env:
+    description: 'To reset all existing environment variables of a task definition. Set to "true" to enable'
+    required: false
 
 runs:
   using: 'docker'

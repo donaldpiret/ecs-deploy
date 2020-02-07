@@ -38,6 +38,12 @@ deploy_action() {
       CMD="${CMD} -e $str"
     done
   fi
+
+  if [ "$INPUT_EXCLUSIVE_ENV" = "true" ]; then
+    CMD="${CMD} --exclusive-env"
+  fi
+
+
 }
 
 case $INPUT_ACTION in
@@ -46,5 +52,7 @@ deploy) # Deployment action
   deploy_action
   ;;
 esac
+
+echo "Command run: ${CMD}"
 
 eval "$CMD"
