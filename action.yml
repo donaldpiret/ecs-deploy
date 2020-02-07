@@ -17,7 +17,12 @@ inputs:
   image:
     description: 'Applicable to the deploy action. Updates the image of a specific container. Pass the value as "[container-name] [image-name]:[image-tag]". You can pass multiple values as comma-separated'
     required: false
-
+  task:
+    description: 'Applicable to the deploy action. Updates the target service with a new task definition, which can either be an ARN, a family name with revision, or just a family name (you will get the most recent revision)'
+    required: false
+  env_vars:
+    description: 'Set one or more environment variables. The syntax is "[ENV_VAR_NAME] [ENV_VAR_VALUE]". You can set multiple env vars by comma-separating them as "[ENV_VAR_NAME] [ENV_VAR_VALUE], [ANOTHER_ENV_VAR_NAME] [ANOTHER_ENV_VAR_VALUE]"'
+    required: false
 
 runs:
   using: 'docker'

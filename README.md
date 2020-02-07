@@ -48,7 +48,35 @@ with:
 
 ### Deploy a custom task definition
 
-TODO
+With a fully-qualified ARN
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  task: arn:aws:ecs:eu-central-1:123456789012:task-definition/my-task:20
+ ```
+
+With a task family name with revision
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  task: my-task:20
+ ```
+
+Or just a task family name. It this case, the most recent revision is used
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  task: my-task
+ ```
 
 ### Set an environment variable
 
