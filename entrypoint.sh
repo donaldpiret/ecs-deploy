@@ -51,7 +51,9 @@ append_common_vars() {
       CMD="${CMD} -e $str"
     done
   fi
+}
 
+append_deploy_vars() {
   if [ "$INPUT_EXCLUSIVE_ENV" = "true" ]; then
     CMD="${CMD} --exclusive-env"
   fi
@@ -99,6 +101,7 @@ deploy) # Deployment action
   echo "Performing deploy"
   deploy_action
   append_common_vars
+  append_deploy_vars
   ;;
 scale) # Scaling action
   echo "Performing scaling"
