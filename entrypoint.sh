@@ -83,6 +83,14 @@ append_common_vars() {
     CMD="${CMD} --ignore-warnings"
   fi
 
+  if [ "$INPUT_NO_DEREGISTER" = "true" ]; then
+    CMD="${CMD} --no-deregister"
+  fi
+
+    if [ "$INPUT_ROLLBACK" = "true" ]; then
+    CMD="${CMD} --rollback"
+  fi
+
   CMD="${CMD} --timeout ${TIMEOUT}"
 }
 
