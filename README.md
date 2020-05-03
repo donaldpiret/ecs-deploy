@@ -160,6 +160,26 @@ with:
   ignore_warnings: true
 ```
 
+### Disable task defintion deregistration
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  no_deregister: true
+```
+
+### Rollback on failure
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  cluster: theClusterName
+  target: theServiceName
+  rollback: true
+```
+
 ### Deployment timeout
 
 ```yml

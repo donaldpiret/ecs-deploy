@@ -51,7 +51,9 @@ append_common_vars() {
       CMD="${CMD} -e $str"
     done
   fi
+}
 
+append_deploy_vars() {
   if [ "$INPUT_EXCLUSIVE_ENV" = "true" ]; then
     CMD="${CMD} --exclusive-env"
   fi
@@ -83,6 +85,14 @@ append_common_vars() {
     CMD="${CMD} --ignore-warnings"
   fi
 
+  if [ "$INPUT_NO_DEREGISTER" = "true" ]; then
+    CMD="${CMD} --no-deregister"
+  fi
+
+    if [ "$INPUT_ROLLBACK" = "true" ]; then
+    CMD="${CMD} --rollback"
+  fi
+
   CMD="${CMD} --timeout ${TIMEOUT}"
 }
 
@@ -91,6 +101,7 @@ deploy) # Deployment action
   echo "Performing deploy"
   deploy_action
   append_common_vars
+  append_deploy_vars
   ;;
 scale) # Scaling action
   echo "Performing scaling"

@@ -44,6 +44,12 @@ inputs:
   ignore_warnings:
     description: 'To ignore warnings that come up during deployment and continue to wait until the deployment times out, set this to "true"'
     required: false
+  no_deregister:
+    description: 'To prevent the previous task defintion from being deleted, set this to "true"'
+    required: false
+  rollback:
+    description: 'To rollback to previous revision, if deployment failed, set this to "true"'
+    required: false
   timeout:
     description: "How long to wait for things to time out (in seconds)"
     required: false
