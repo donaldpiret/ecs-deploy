@@ -1,5 +1,6 @@
 {
   "dependencies": {
     "@commitlint/config-conventional": "^8.3.4"
-  }
+  },
+  "version": "0.1.0"
 }
