@@ -29,6 +29,26 @@ deploy_action() {
   fi
 }
 
+## Cron function
+cron_action() {
+  [ -z "$INPUT_RULE" ] && (echo "Missing rule" && exit 1)
+
+  CMD="${CMD} ${INPUT_RULE}"
+
+  if [ -n "$INPUT_TAG" ]; then # Deploying a specific tag
+    CMD="${CMD} -t ${INPUT_TAG}"
+  elif [ -n "$INPUT_IMAGE" ]; then # Deploying one or more images
+    rest=$INPUT_IMAGE
+    while [ -n "$rest" ] ; do
+      str=${rest%%,*}  # Everything up to the first ','
+      # Trim up to the first ',' -- and handle final case, too.
+      [ "$rest" = "${rest/,/}" ] && rest= || rest=${rest#*,}
+
+      CMD="${CMD} -i $str"
+    done
+  fi
+}
+
 ## Scale function
 scale_action() {
   [ -z "$INPUT_SCALE_VALUE" ] && (echo "Missing scale value" && exit 1)
@@ -100,6 +120,12 @@ case $INPUT_ACTION in
 deploy) # Deployment action
   echo "Performing deploy"
   deploy_action
+  append_common_vars
+  append_deploy_vars
+  ;;
+cron) # Cron action
+  echo "Performing cron"
+  cron_action
   append_common_vars
   append_deploy_vars
   ;;
