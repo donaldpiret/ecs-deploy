@@ -201,6 +201,33 @@ with:
   timeout: -1
 ```
 
+### Deploy a Scheduled Task (Cron) Update
+
+The `cron` action deploys a new task definition to a Scheduled Task rule. The `target` should be a task definition
+family name, and the `rule` option must specify the CloudWatch Events rule name.
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: cron
+  cluster: theClusterName
+  target: taskName
+  rule: ruleName
+  image: application my-app:1.2.3
+```
+
+The following options work the same with `cron` as with `deploy` to update the task definition:
+
+- `image`
+- `tag`
+- `env_vars`
+- `exclusive_env`
+- `task_role`
+- `command`
+- `no_deregister`
+- `rollback`
+- `timeout`
+
 ### Scaling
 
 #### Scale a service
