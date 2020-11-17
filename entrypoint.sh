@@ -109,11 +109,13 @@ append_deploy_vars() {
     CMD="${CMD} --no-deregister"
   fi
 
-    if [ "$INPUT_ROLLBACK" = "true" ]; then
+  if [ "$INPUT_ROLLBACK" = "true" ]; then
     CMD="${CMD} --rollback"
   fi
 
-  CMD="${CMD} --timeout ${TIMEOUT}"
+  if [ "$INPUT_ACTION" != "cron" ]; then
+    CMD="${CMD} --timeout ${TIMEOUT}"
+  fi
 }
 
 case $INPUT_ACTION in
