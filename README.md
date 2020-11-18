@@ -226,7 +226,6 @@ The following options work the same with `cron` as with `deploy` to update the t
 - `command`
 - `no_deregister`
 - `rollback`
-- `timeout`
 
 ### Scaling
 
