@@ -1,0 +1,36 @@
+name: release
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }} # Needs a token that has push access to protected branches
+      - name: Prepare repository
+        run: git fetch --unshallow --tags
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: yarn-deps-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            yarn-deps-${{ hashFiles('yarn.lock') }}
+      # Skip post-install scripts here, as a malicious
+      # script could steal GH_PACKAGES_TOKEN.
+      - name: Run yarn install
+        run: yarn install --ignore-scripts --frozen-lockfile
+      - name: Setup git config
+        run: |
+          git config user.name "Release Bot"
+          git config user.email "bot@example.com"
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # Needs a token that has push access to protected branches
+        run: yarn run auto shipit

@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    "git-tag",
+    "conventional-commits",
+    [
+      "released", {
+        "label": ":shipit:",
+        "prereleaseLabel": "🚧"
+      }
+    ]
+  ],
+  "owner": "donaldpiret",
+  "repo": "ecs-deploy",
+  "name": "donaldpiret",
+  "email": "donald@donaldpiret.com"
+}
