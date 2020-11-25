@@ -16,7 +16,7 @@ with:
   target: theServiceName
 ```
 
-### Deploy a new tag
+#### Deploy a new tag
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -26,7 +26,7 @@ with:
   tag: 1.2.3
  ```
 
-### Deploy a new image
+#### Deploy a new image
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -36,7 +36,7 @@ with:
   image: webserver nginx:1.11.8
  ```
 
-### Deploy several new images
+#### Deploy several new images
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -46,7 +46,7 @@ with:
   image: webserver nginx:1.11.8, application my-app:1.2.3
  ```
 
-### Deploy a custom task definition
+#### Deploy a custom task definition
 
 With a fully-qualified ARN
 
@@ -78,7 +78,7 @@ with:
   task: my-task
  ```
 
-### Set an environment variable
+#### Set an environment variable
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -88,7 +88,7 @@ with:
   env_vars: containerName SOME_VARIABLE SOME_VALUE
  ```
 
-### Adjust multiple environment variables
+#### Adjust multiple environment variables
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -98,7 +98,7 @@ with:
   env_vars: containerName SOME_VARIABLE SOME_VALUE, containerName OTHER_VARIABLE OTHER_VALUE, appContainerName APP_VARIABLE APP_VALUE
  ```
 
-### Set environment variables exclusively, remove all other pre-existing environment variables
+#### Set environment variables exclusively, remove all other pre-existing environment variables
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -109,7 +109,7 @@ with:
   exclusive_env: true
  ```
 
-### Set a secret environment variable from the AWS Parameter Store or Secrets Manager
+#### Set a secret environment variable from the AWS Parameter Store or Secrets Manager
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -119,7 +119,7 @@ with:
   secrets: containerName SOME_SECRET arn:aws:ssm:<aws region>:<aws account id>:parameter/KEY_OF_SECRET_IN_PARAMETER_STORE
  ```
 
-### Set secrets exclusively, remove all other pre-existing secret environment variables
+#### Set secrets exclusively, remove all other pre-existing secret environment variables
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -130,7 +130,7 @@ with:
   exclusive_secrets: true 
 ```
 
-### Modify a command
+#### Modify a command
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -140,7 +140,7 @@ with:
   command: containerName "nginx -c /etc/nginx/nginx.conf"
 ```
 
-### Set a task role
+#### Set a task role
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -150,7 +150,7 @@ with:
   task_role: arn:aws:iam::123456789012:role/MySpecialEcsTaskRole
 ```
 
-### Ignore capacity issues
+#### Ignore capacity issues
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -160,7 +160,7 @@ with:
   ignore_warnings: true
 ```
 
-### Disable task defintion deregistration
+#### Disable task definition deregistration
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -170,7 +170,7 @@ with:
   no_deregister: true
 ```
 
-### Rollback on failure
+#### Rollback on failure
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -180,7 +180,7 @@ with:
   rollback: true
 ```
 
-### Deployment timeout
+#### Deployment timeout
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -201,9 +201,35 @@ with:
   timeout: -1
 ```
 
-## Scaling
+### Deploy a Scheduled Task (Cron) Update
 
-### Scale a service
+The `cron` action deploys a new task definition to a Scheduled Task rule. The `target` should be a task definition
+family name, and the `rule` option must specify the CloudWatch Events rule name.
+
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: cron
+  cluster: theClusterName
+  target: taskName
+  rule: ruleName
+  image: application my-app:1.2.3
+```
+
+The following options work the same with `cron` as with `deploy` to update the task definition:
+
+- `image`
+- `tag`
+- `env_vars`
+- `exclusive_env`
+- `task_role`
+- `command`
+- `no_deregister`
+- `rollback`
+
+### Scaling
+
+#### Scale a service
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -214,9 +240,9 @@ with:
   scale_value: 4
 ```
 
-## Running a Task
+### Running a Task
 
-### Run a one-off task
+#### Run a one-off task
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -237,7 +263,7 @@ with:
   env_vars: containerName SOME_VARIABLE SOME_VALUE, containerName OTHER_VARIABLE OTHER_VALUE, appContainerName APP_VARIABLE APP_VALUE
  ```
 
-### Run a task with a custom command
+#### Run a task with a custom command
 
 ```yml
 uses: donaldpiret/ecs-deploy@master
@@ -248,7 +274,7 @@ with:
   command: my-container "python some-script.py param1 param2"
 ```
 
-### Run a task in a Fargate Cluster
+#### Run a task in a Fargate Cluster
 
 TODO
 
