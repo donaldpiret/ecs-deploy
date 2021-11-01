@@ -118,6 +118,24 @@ append_deploy_vars() {
   fi
 }
 
+append_run_vars() {
+  if [ -n "$INPUT_LAUNCH_TYPE" ]; then # Launch Type
+    CMD="${CMD} --launchtype=${INPUT_LAUNCH_TYPE}"
+  fi
+
+  if [ -n "$INPUT_SECURITY_GROUP" ]; then # Security Group
+    CMD="${CMD} --securitygroup ${INPUT_SECURITY_GROUP}"
+  fi
+
+  if [ -n "$INPUT_SUBNET" ]; then # Subnet
+    CMD="${CMD} --subnet ${INPUT_SUBNET}"
+  fi
+
+  if [ "$INPUT_public_ip" = "true" ]; then
+    CMD="${CMD} --public-ip"
+  fi
+}
+
 case $INPUT_ACTION in
 deploy) # Deployment action
   echo "Performing deploy"
@@ -139,6 +157,7 @@ run) # Run action
   echo "Performing run"
   run_action
   append_common_vars
+  append_run_vars
   ;;
 esac
 

@@ -279,8 +279,18 @@ with:
 
 #### Run a task in a Fargate Cluster
 
-TODO
-
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: run
+  cluster: theClusterName
+  target: taskName:taskRevision
+  command: my-container "python some-script.py param1 param2"
+  launch_type: FARGATE
+  security_group: securityGroupID
+  subnet: subnetID
+  public_ip: true
+```
 
 ## Contributors ✨
 

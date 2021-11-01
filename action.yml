@@ -60,6 +60,18 @@ inputs:
   scale_value:
     description: "Applicable to the scale action. Determines how many running tasks you wish to have on the service"
     required: false
+  launch_type:
+    description: "Applicable to the run action. Setting this value to FARGATE will launch the task on fargate (see required options below)"
+    required: false
+  security_group:
+    description: "Required the run action with FARGATE launch type. Determines the security group ID to attach to this task"
+    required: false
+  subnet:
+    description: "Required the run action with FARGATE launch type. Determines the subnet ID to launch this task into"
+    required: false
+  public_ip:
+    description: "Applies to the run action with FARGATE launch type. If set to true will attach this task with a public IP"
+    required: false
 
 runs:
   using: 'docker'
