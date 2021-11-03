@@ -60,6 +60,11 @@ run_action() {
   CMD="${CMD}"
 }
 
+## Update function
+update_action() {
+  CMD="ecs update ${INPUT_TARGET}"
+}
+
 append_common_vars() {
   if [ -n "$INPUT_ENV_VARS" ]; then # Env vars
     rest=$INPUT_ENV_VARS
@@ -71,9 +76,7 @@ append_common_vars() {
       CMD="${CMD} -e $str"
     done
   fi
-}
 
-append_deploy_vars() {
   if [ "$INPUT_EXCLUSIVE_ENV" = "true" ]; then
     CMD="${CMD} --exclusive-env"
   fi
@@ -96,7 +99,9 @@ append_deploy_vars() {
   if [ -n "$INPUT_COMMAND" ]; then # Custom command
     CMD="${CMD} --command \"${INPUT_COMMAND}\""
   fi
+}
 
+append_deploy_vars() {
   if [ -n "$INPUT_TASK_ROLE" ]; then # Task role
     CMD="${CMD} -r ${INPUT_TASK_ROLE}"
   fi
@@ -159,6 +164,10 @@ run) # Run action
   append_common_vars
   append_run_vars
   ;;
+update) # Update action
+  echo "Performing update"
+  update_action
+  append_comon_vars
 esac
 
 echo "Command run: ${CMD}"
