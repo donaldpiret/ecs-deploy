@@ -97,7 +97,7 @@ append_common_vars() {
   fi
 
   if [ -n "$INPUT_COMMAND" ]; then # Custom command
-    CMD="${CMD} --command \"${INPUT_COMMAND}\""
+    CMD="${CMD} --command ${INPUT_COMMAND}"
   fi
 }
 
