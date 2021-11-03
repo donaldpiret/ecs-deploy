@@ -167,7 +167,7 @@ run) # Run action
 update) # Update action
   echo "Performing update"
   update_action
-  append_comon_vars
+  append_common_vars
 esac
 
 echo "Command run: ${CMD}"
