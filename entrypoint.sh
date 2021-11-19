@@ -63,6 +63,18 @@ run_action() {
 ## Update function
 update_action() {
   CMD="ecs update ${INPUT_TARGET}"
+  if [ -n "$INPUT_TAG" ]; then # Deploying a specific tag
+    CMD="${CMD} -t ${INPUT_TAG}"
+  elif [ -n "$INPUT_IMAGE" ]; then # Deploying one or more images
+    rest=$INPUT_IMAGE
+    while [ -n "$rest" ] ; do
+      str=${rest%%,*}  # Everything up to the first ','
+      # Trim up to the first ',' -- and handle final case, too.
+      [ "$rest" = "${rest/,/}" ] && rest= || rest=${rest#*,}
+
+      CMD="${CMD} -i $str"
+    done
+  fi
 }
 
 append_common_vars() {
