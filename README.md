@@ -292,6 +292,14 @@ with:
   public_ip: true
 ```
 
+## Troubleshooting
+
+### I'm getting the error 'Unknown task definition arn'
+
+Please make sure the service account is correctly set up and has the necessary
+IAM permissions. It might be related to a missing `ecs:ListTaskDefinitions`
+permission.
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
