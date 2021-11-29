@@ -60,6 +60,23 @@ run_action() {
   CMD="${CMD}"
 }
 
+## Update function
+update_action() {
+  CMD="ecs update ${INPUT_TARGET}"
+  if [ -n "$INPUT_TAG" ]; then # Deploying a specific tag
+    CMD="${CMD} -t ${INPUT_TAG}"
+  elif [ -n "$INPUT_IMAGE" ]; then # Deploying one or more images
+    rest=$INPUT_IMAGE
+    while [ -n "$rest" ] ; do
+      str=${rest%%,*}  # Everything up to the first ','
+      # Trim up to the first ',' -- and handle final case, too.
+      [ "$rest" = "${rest/,/}" ] && rest= || rest=${rest#*,}
+
+      CMD="${CMD} -i $str"
+    done
+  fi
+}
+
 append_common_vars() {
   if [ -n "$INPUT_ENV_VARS" ]; then # Env vars
     rest=$INPUT_ENV_VARS
@@ -71,9 +88,7 @@ append_common_vars() {
       CMD="${CMD} -e $str"
     done
   fi
-}
 
-append_deploy_vars() {
   if [ "$INPUT_EXCLUSIVE_ENV" = "true" ]; then
     CMD="${CMD} --exclusive-env"
   fi
@@ -96,7 +111,9 @@ append_deploy_vars() {
   if [ -n "$INPUT_COMMAND" ]; then # Custom command
     CMD="${CMD} --command ${INPUT_COMMAND}"
   fi
+}
 
+append_deploy_vars() {
   if [ -n "$INPUT_TASK_ROLE" ]; then # Task role
     CMD="${CMD} -r ${INPUT_TASK_ROLE}"
   fi
@@ -115,6 +132,24 @@ append_deploy_vars() {
 
   if [ "$INPUT_ACTION" != "cron" ]; then
     CMD="${CMD} --timeout ${TIMEOUT}"
+  fi
+}
+
+append_run_vars() {
+  if [ -n "$INPUT_LAUNCH_TYPE" ]; then # Launch Type
+    CMD="${CMD} --launchtype=${INPUT_LAUNCH_TYPE}"
+  fi
+
+  if [ -n "$INPUT_SECURITY_GROUP" ]; then # Security Group
+    CMD="${CMD} --securitygroup ${INPUT_SECURITY_GROUP}"
+  fi
+
+  if [ -n "$INPUT_SUBNET" ]; then # Subnet
+    CMD="${CMD} --subnet ${INPUT_SUBNET}"
+  fi
+
+  if [ "$INPUT_public_ip" = "true" ]; then
+    CMD="${CMD} --public-ip"
   fi
 }
 
@@ -139,7 +174,12 @@ run) # Run action
   echo "Performing run"
   run_action
   append_common_vars
+  append_run_vars
   ;;
+update) # Update action
+  echo "Performing update"
+  update_action
+  append_common_vars
 esac
 
 echo "Command run: ${CMD}"

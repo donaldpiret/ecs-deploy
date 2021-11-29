@@ -279,8 +279,26 @@ with:
 
 #### Run a task in a Fargate Cluster
 
-TODO
+```yml
+uses: donaldpiret/ecs-deploy@master
+with:
+  action: run
+  cluster: theClusterName
+  target: taskName:taskRevision
+  command: my-container "python some-script.py param1 param2"
+  launch_type: FARGATE
+  security_group: securityGroupID
+  subnet: subnetID
+  public_ip: true
+```
 
+## Troubleshooting
+
+### I'm getting the error 'Unknown task definition arn'
+
+Please make sure the service account is correctly set up and has the necessary
+IAM permissions. It might be related to a missing `ecs:ListTaskDefinitions`
+permission.
 
 ## Contributors ✨
 
