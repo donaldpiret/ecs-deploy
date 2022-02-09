@@ -7,7 +7,7 @@ set -e o pipefail
 [ -z "$INPUT_CLUSTER" ] && (echo "Missing Cluster Name" && exit 1)
 [ -z "$INPUT_TARGET" ] && (echo "Missing target" && exit 1)
 
-TIMEOUT=${INPUT_TIMEOUT:-300}
+TIMEOUT=${INPUT_TIMEOUT:-500}
 
 CMD="ecs ${INPUT_ACTION} ${INPUT_CLUSTER} ${INPUT_TARGET}"
 
